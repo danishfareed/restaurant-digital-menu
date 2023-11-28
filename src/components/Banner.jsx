@@ -1,9 +1,10 @@
 import React from 'react';
 
-function Banner() {
+function Banner({ backgroundImage, title }) {
   return (
-    <div className="bg-red-600 text-white text-center py-4">
-      <h1 className="text-4xl font-bold">TGI Fridays</h1>
+    <div className="relative text-white text-center py-24" style={{ backgroundImage: `url(${backgroundImage})`, backgroundSize: 'cover' }}>
+      <div className="absolute inset-0 bg-black bg-opacity-50"></div>
+      <h1 className="text-4xl font-bold relative z-10">{title}</h1>
     </div>
   );
 }
