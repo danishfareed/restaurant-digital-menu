@@ -5,16 +5,21 @@ import Banner from '../components/Banner';
 import StickyTabs from '../components/StickyTabs';
 import MenuList from '../components/MenuList';
 
+
 export const MenuPage = () => {
   const navigate = useNavigate();
   const { slug } = useParams();
   const menuRefs = useRef({});
   const [activeCategory, setActiveCategory] = useState('');
 
+
   const { data, isLoading, error } = useQuery(['menu', slug], () =>
     fetch(`https://tgifridaysme.com/wp-json/wp/v2/digital_menu?slug=${slug}`)
       .then(res => res.json())
-      .then(data => data[0] || {})
+      .then(data => data[0] || {}),
+      {
+        cacheTime: 0
+      }
   );
 
   useEffect(() => {
@@ -25,7 +30,7 @@ export const MenuPage = () => {
 
   useEffect(() => {
     if (data?.acf?.Menus) {
-      const categories = data.acf.Menus.map(menu => menu.dm_menu_category);
+      const categories = data?.acf?.Menus.map(menu => menu.dm_menu_category);
 
       categories.forEach(category => {
         menuRefs.current[category] = React.createRef();
@@ -33,9 +38,11 @@ export const MenuPage = () => {
 
       const handleScroll = () => {
         let found = false;
+        console.log(categories);
         for (let category of categories) {
           const ref = menuRefs.current[category];
-          if (ref.current && window.scrollY >= ref.current.offsetTop - ref.current.clientHeight) {
+          console.log({ref})
+          if (ref.current && window.scrollY >= ref.current.offsetTop)  {
             setActiveCategory(category);
             found = true;
             break;
@@ -43,7 +50,7 @@ export const MenuPage = () => {
         }
         if (!found) setActiveCategory(categories[0]);
       };
-    
+      
       window.addEventListener('scroll', handleScroll);
       return () => window.removeEventListener('scroll', handleScroll);
     }
@@ -70,6 +77,7 @@ export const MenuPage = () => {
   return (
     <div className="App">
       <Banner backgroundImage={bannerImage} title={bannerTitle} />
+      
       <StickyTabs activeCategory={activeCategory} categories={categories} onCategoryClick={handleCategoryClick} />
       <div className="menu-content">
         {data.acf.Menus.map((categoryData, index) => (
