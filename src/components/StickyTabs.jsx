@@ -1,7 +1,7 @@
 import React from 'react';
 
 function StickyTabs({ categories, activeCategory, onCategoryClick }) {
-  const uniqueCategories = Array.from(new Set(categories)).sort();
+  const uniqueCategories = Array.from(new Set(categories));
 
   return (
     <div className="sticky top-0 bg-white text-black p-2 flex justify-center overflow-x-auto shadow-md z-10">

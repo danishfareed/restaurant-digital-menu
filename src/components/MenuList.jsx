@@ -1,6 +1,7 @@
 import React, { useState, Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 
+
 function MenuList({ category, menuItems }) {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
@@ -19,12 +20,22 @@ function MenuList({ category, menuItems }) {
       <h2 className="text-2xl font-bold mb-4 text-left" id={category} style={{ color: '#d91e39' }}>{category}</h2>
       {menuItems.map((item, index) => (
         <div key={index} className="flex border-b last:border-none py-2" onClick={() => openModal(item)}>
-          <img src={item.dm_menu_item_image.url} alt={item.dm_menu_item_name} className="w-20 h-20 mr-4 object-cover rounded-sm" />
-          <div className="text-left">
+      
+            <img 
+                src={item.dm_menu_item_image.url ? item.dm_menu_item_image.url : "https://placehold.co/200x200"} 
+                alt={item.dm_menu_item_name} 
+                className="w-20 h-20 mr-4 object-cover rounded-sm"
+            />
+            <div className="text-left">
             <h3 className="text-lg font-semibold">{item.dm_menu_item_name}</h3>
-            <p className="text-gray-600">${item.dm_menu_item_desc?.substring(0,90)}...</p>
+            <p className="text-gray-600">
+              {item.dm_menu_item_desc?.length > 90 
+                  ? `${item.dm_menu_item_desc.substring(0, 90)}...`
+                  : item.dm_menu_item_desc}
+            </p>
             <p style={{ color: '#d91e39' }}>{item.dm_menu_item_price}</p>
           </div>
+
         </div>
       ))}
 
@@ -41,7 +52,7 @@ function MenuList({ category, menuItems }) {
                   <>
                     <img src={selectedItem.dm_menu_item_image.url} alt={selectedItem.dm_menu_item_name} className="w-full h-40 object-cover rounded-lg mb-4" />
                     <h3 className="text-xl font-bold">{selectedItem.dm_menu_item_name}</h3>
-                    <p className="text-gray-700">{`${selectedItem?.dm_menu_item_desc}`}</p>
+                    <p className="text-gray-700">{selectedItem?.dm_menu_item_desc}</p>
                     <p style={{ color: '#d91e39' }}>{selectedItem.dm_menu_item_price}</p>
                   </>
                 )}

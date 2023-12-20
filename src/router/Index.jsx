@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { HomePage } from "../pages/HomePage";
 import { MenuPage } from "../pages/MenuPage";
 import NotFoundPage from "../pages/NotFoundPage"; // Import the NotFoundPage
+import Loader from '../components/Loader';
 
 const Index = () => {
   return (

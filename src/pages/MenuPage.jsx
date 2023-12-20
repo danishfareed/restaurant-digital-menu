@@ -4,7 +4,8 @@ import { useQuery } from 'react-query';
 import Banner from '../components/Banner';
 import StickyTabs from '../components/StickyTabs';
 import MenuList from '../components/MenuList';
-
+import {Helmet} from "react-helmet";
+import Loader from '../components/Loader';
 
 export const MenuPage = () => {
   const navigate = useNavigate();
@@ -60,11 +61,18 @@ export const MenuPage = () => {
     setActiveCategory(category);
     const categoryRef = menuRefs.current[category];
     if (categoryRef && categoryRef.current) {
-      categoryRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      const headerOffset = 60; // Height of your fixed header
+      const elementPosition = categoryRef.current.getBoundingClientRect().top + window.pageYOffset;
+      const offsetPosition = elementPosition - headerOffset;
+  
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
     }
   };
 
-  if (isLoading) return <span>Loading...</span>;
+  if (isLoading) return <Loader />;
   if (error) return <span>An error occurred: {error.message}</span>;
 
   // Ensure data is defined before rendering components that depend on it
@@ -76,6 +84,10 @@ export const MenuPage = () => {
 
   return (
     <div className="App">
+      <Helmet>
+          <meta charSet="utf-8" />
+          <title>{slug.replace(/-/g, ' ').toUpperCase()}</title>
+      </Helmet>
       <Banner backgroundImage={bannerImage} title={bannerTitle} />
       
       <StickyTabs activeCategory={activeCategory} categories={categories} onCategoryClick={handleCategoryClick} />
