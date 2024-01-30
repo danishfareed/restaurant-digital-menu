@@ -3,6 +3,7 @@ import React from 'react'
 export const HomePage = () => {
   return (
     <>
+  <div className="flex items-center justify-center min-h-screen">
     <div className="max-w-xl mx-auto bg-white p-8 rounded shadow-md">
       <img
         src="https://tgifridaysme.com/wp-content/themes/tgifridays-theme/assets/images/logo-tgifridays.png"
@@ -11,7 +12,7 @@ export const HomePage = () => {
       />
 
       <a
-        href="https://www.tgifridays.com/"
+        href="https://www.tgifridaysme.com/"
         target="_blank"
         rel="noopener noreferrer"
         className="text-blue-500 hover:underline mb-4 block"
@@ -23,6 +24,8 @@ export const HomePage = () => {
         Click Me
       </button>
     </div>
-    </>
+  </div>
+</>
+
   )
 }

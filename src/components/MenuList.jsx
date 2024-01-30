@@ -17,7 +17,7 @@ function MenuList({ category, menuItems }) {
 
   return (
     <div className="p-4 max-w-screen-md mx-auto" style={{ maxWidth: '600px' }}>
-      <h2 className="text-2xl font-bold mb-4 text-left" id={category} style={{ color: '#d91e39' }}>{category}</h2>
+      <h2 className="text-2xl font-bold mb-4 text-left text-red-700" id={category}>{category}</h2>
       {menuItems.map((item, index) => (
         <div key={index} className="flex border-b last:border-none py-2" onClick={() => openModal(item)}>
       
@@ -27,13 +27,13 @@ function MenuList({ category, menuItems }) {
                 className="w-20 h-20 mr-4 object-cover rounded-sm"
             />
             <div className="text-left">
-            <h3 className="text-lg font-semibold">{item.dm_menu_item_name}</h3>
-            <p className="text-gray-600">
+            <h3 className="text-base font-semibold">{item.dm_menu_item_name}</h3>
+            <p className="text-sm text-gray-600">
               {item.dm_menu_item_desc?.length > 90 
                   ? `${item.dm_menu_item_desc.substring(0, 90)}...`
                   : item.dm_menu_item_desc}
             </p>
-            <p style={{ color: '#d91e39' }}>{item.dm_menu_item_price}</p>
+            <p className="text-sm text-red-700">{item.dm_menu_item_price}</p>
           </div>
 
         </div>
@@ -51,9 +51,15 @@ function MenuList({ category, menuItems }) {
                 {selectedItem && (
                   <>
                     <img src={selectedItem.dm_menu_item_image.url} alt={selectedItem.dm_menu_item_name} className="w-full h-40 object-cover rounded-lg mb-4" />
-                    <h3 className="text-xl font-bold">{selectedItem.dm_menu_item_name}</h3>
-                    <p className="text-gray-700">{selectedItem?.dm_menu_item_desc}</p>
-                    <p style={{ color: '#d91e39' }}>{selectedItem.dm_menu_item_price}</p>
+                    <h3 className="text-xl font-bold leading-6">{selectedItem.dm_menu_item_name}</h3>
+                    <p className="text-gray-700 leading-6">{selectedItem?.dm_menu_item_desc}</p>
+                    {selectedItem?.dm_menu_item_sides && selectedItem?.dm_menu_item_sides.length > 1 && (
+                      <div className='py-2'>
+                        <p className="text-black-500 text-xs font-semibold">Available sides:</p>
+                        <p className="text-gray-500 text-xs font-light">{selectedItem?.dm_menu_item_sides}</p>
+                      </div>
+                    )}
+                    <p className="text-red-700 font-semibold">{selectedItem.dm_menu_item_price}</p>
                   </>
                 )}
               </div>
