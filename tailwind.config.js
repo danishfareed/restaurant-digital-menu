@@ -5,6 +5,7 @@ module.exports = {
     extend: {},
   },
   plugins: [
+    require('tailwindcss-rtl'),
     // ... your other plugins
     plugin(({ addUtilities }) => {
       const newUtilities = {
